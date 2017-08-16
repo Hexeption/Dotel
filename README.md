@@ -12,6 +12,7 @@ Dotel developed by:
 
 Dotel uses the following third-party libraries:
 - GLFW 3.2.1 (https://github.com/glfw/glfw)
+- SOIL (https://github.com/paralin/soil)
 
 ## License
 
