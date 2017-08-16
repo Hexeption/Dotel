@@ -1,7 +1,14 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.3)
 project(Dotel)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+# Including GLFW
+add_subdirectory(glfw)
+include_directories(glfw/include)
 
 set(SOURCE_FILES source/main.cpp)
 add_executable(Dotel ${SOURCE_FILES})
+
+# Linking GLFW
+target_link_libraries(Dotel glfw ${GLFW_LIBRARIES})
