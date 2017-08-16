@@ -3,12 +3,13 @@ project(Dotel)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-# Including GLFW
-add_subdirectory(glfw)
-include_directories(glfw/include)
+add_subdirectory(Dependencies/glfw)
+include_directories(Dependencies/glfw/include)
+
+add_subdirectory(Dependencies/soil)
+include_directories(Dependencies/soil/inc)
 
 set(SOURCE_FILES source/main.cpp source/Window.cpp source/Window.h)
 add_executable(Dotel ${SOURCE_FILES})
 
-# Linking GLFW
 target_link_libraries(Dotel glfw ${GLFW_LIBRARIES})
