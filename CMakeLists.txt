@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
 project(Dotel)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 # Including GLFW
 add_subdirectory(glfw)
