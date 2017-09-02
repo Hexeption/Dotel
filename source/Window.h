@@ -5,34 +5,32 @@
 #ifndef DOTEL_WINDOW_H
 #define DOTEL_WINDOW_H
 
-
-#include <GLFW/glfw3.h>
+#include <string>
+#include <GLFW\glfw3.h>
 
 class Window {
 
 public:
-    Window(int width, int height, bool fullscreen);
-
+    Window(int width, int height, const std::string& windowTitle, bool fullscreen);
     ~Window();
 
     void Create();
-
-    void Destory();
-
+    void Destroy();
     void Update(float dt);
-
-    void Render();
-
-    void InitializeWindowContext(GLFWwindow *window);
-
+    void PrepareRender();
+	void UpdateDisplay();
+	void SetupModernOpenGL();
+	void SetupForOSX();
+	void InitializeProjectionMatrix();
+	void UpdateWindowVariables();
+	void ClearDisplay();
     bool ShouldClose();
-
 private:
     GLFWwindow *m_pWindow;
 
     bool m_pFullscreen;
 
-
+	std::string m_windowTitle;
     int m_windowWidth;
     int m_windowHeight;
     int m_oldWindowWidth;

@@ -2,69 +2,115 @@
 // Created by Keir on 16/08/2017.
 //
 
-#include <cstdlib>
+#include <iostream>
 #include "Window.h"
 
-Window::Window(int width, int height, bool fullscreen) {
+//The method called when the Window is resized
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
+Window::Window(int width, int height, const std::string& windowTitle, bool fullscreen) 
+{
 	m_pFullscreen = fullscreen;
 
+	m_windowTitle = windowTitle;
 	m_windowWidth = width;
 	m_windowHeight = height;
 	m_oldWindowWidth = m_windowWidth;
 	m_oldWindowHeight = m_windowHeight;
+
+	Create();
 }
 
-Window::~Window() {
+Window::~Window()
+{
+	Destroy();
 }
 
-void Window::Create() {
+void Window::SetupModernOpenGL()
+{
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+}
+
+void Window::SetupForOSX()
+{
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+}
+
+void Window::Create()
+{
 	/* Initialize the window library */
 	if (!glfwInit())
-		exit(EXIT_FAILURE);
+	{
+		std::cerr << "Failed to initialize GLFW" << std::endl;
+		std::exit(-1);
+	}
 
 	/* Create a windowed mode window and it's OpenGL context */
-	m_pWindow = glfwCreateWindow(m_windowWidth, m_windowHeight, "Vox", NULL, NULL);
-	if (!m_pWindow) {
+	m_pWindow = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowTitle.c_str(), NULL, NULL);
+	if (!m_pWindow) 
+	{
+		std::cerr << "Failed to create Window, Possible cause: Not Enough Memory" << std::endl;
 		glfwTerminate();
-		exit(EXIT_FAILURE);
+		std::exit(-1);
 	}
 
 	glfwMakeContextCurrent(m_pWindow);
 	glfwSwapInterval(1);
+
+	glfwSetFramebufferSizeCallback(m_pWindow, framebuffer_size_callback);
 }
 
-void Window::Destory() {
+void Window::Destroy()
+{
+	glfwDestroyWindow(m_pWindow);
 	glfwTerminate();
 }
 
-void Window::Update(float dt) {
+void Window::Update(float dt)
+{
 }
 
-void Window::Render() {
-	float ratio;
-	int width, height;
-	glfwGetFramebufferSize(m_pWindow, &width, &height);
-	ratio = width / (float)height;
-	glViewport(0, 0, width, height);
-	glClear(GL_COLOR_BUFFER_BIT);
+void Window::InitializeProjectionMatrix()
+{
+	float ratio = m_windowWidth / (float)m_windowHeight;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glRotatef((float)glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.f, 0.f, 0.f);
-	glVertex3f(-0.6f, -0.4f, 0.f);
-	glColor3f(0.f, 1.f, 0.f);
-	glVertex3f(0.6f, -0.4f, 0.f);
-	glColor3f(0.f, 0.f, 1.f);
-	glVertex3f(0.f, 0.6f, 0.f);
-	glEnd();
+}
+
+void Window::UpdateWindowVariables()
+{
+	glfwGetWindowSize(m_pWindow, &m_windowWidth, &m_windowHeight);
+}
+
+void Window::ClearDisplay()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Window::UpdateDisplay()
+{
 	glfwSwapBuffers(m_pWindow);
 	glfwPollEvents();
 }
 
-bool Window::ShouldClose() {
-	return !static_cast<bool>(glfwWindowShouldClose(m_pWindow));
+void Window::PrepareRender()
+{
+	ClearDisplay();
+	UpdateWindowVariables();
+	InitializeProjectionMatrix();
+}
+
+bool Window::ShouldClose()
+{
+	return static_cast<bool>(glfwWindowShouldClose(m_pWindow));
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
 }
