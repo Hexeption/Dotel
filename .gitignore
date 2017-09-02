@@ -5,3 +5,5 @@
 !/source
 !/LICENSE
 !/README.md
+!/Dependencies/glew
+!/Dependencies/glm
