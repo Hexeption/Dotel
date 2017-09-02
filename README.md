@@ -8,11 +8,13 @@ Dotel is a 2D and 3D game engine implemented in C++ 17 and released under the BS
 
 ## Credits
 Dotel developed by:
-- Keir Davis
+- Keir Davis (https://github.com/Hexeption)
 - DabatoIsCool (https://github.com/DabatoIsCool)
 
 Dotel uses the following third-party libraries:
 - GLFW 3.2.1 (https://github.com/glfw/glfw)
+- GLEW 2.1.0 (http://glew.sourceforge.net)
+- GLM 0.9.6.3 (https://glm.g-truc.net/0.9.6/index.html)
 - SOIL (https://github.com/paralin/soil)
 
 ## License
