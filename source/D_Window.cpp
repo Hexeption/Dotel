@@ -3,12 +3,12 @@
 //
 
 #include <iostream>
-#include "Window.h"
+#include "D_Window.h"
 
 //The method called when the Window is resized
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
-Window::Window(int width, int height, const std::string &windowTitle, bool fullscreen) {
+D_Window::D_Window(int width, int height, const std::string &windowTitle, bool fullscreen) {
     m_pFullscreen = fullscreen;
 
     m_windowTitle = windowTitle;
@@ -20,21 +20,21 @@ Window::Window(int width, int height, const std::string &windowTitle, bool fulls
     Create();
 }
 
-Window::~Window() {
+D_Window::~D_Window() {
     Destroy();
 }
 
-void Window::SetupModernOpenGL() {
+void D_Window::SetupModernOpenGL() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
-void Window::SetupForOSX() {
+void D_Window::SetupForOSX() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 }
 
-void Window::Create() {
+void D_Window::Create() {
     /* Initialize the window library */
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -57,20 +57,27 @@ void Window::Create() {
         std::exit(-1);
     }
 
+	#ifdef D_MODERN_OPENGL
+	SetupModernOpenGL();
+	#ifdef D_OSX
+	SetupForOSX();
+	#endif
+	#endif
+
     std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
 
     glfwSetFramebufferSizeCallback(m_pWindow, framebuffer_size_callback);
 }
 
-void Window::Destroy() {
+void D_Window::Destroy() {
     glfwDestroyWindow(m_pWindow);
     glfwTerminate();
 }
 
-void Window::Update(float dt) {
+void D_Window::Update(float dt) {
 }
 
-void Window::InitializeProjectionMatrix() {
+void D_Window::InitializeProjectionMatrix() {
     float ratio = m_windowWidth / (float) m_windowHeight;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -79,26 +86,26 @@ void Window::InitializeProjectionMatrix() {
     glLoadIdentity();
 }
 
-void Window::UpdateWindowVariables() {
+void D_Window::UpdateWindowVariables() {
     glfwGetWindowSize(m_pWindow, &m_windowWidth, &m_windowHeight);
 }
 
-void Window::ClearDisplay() {
+void D_Window::ClearDisplay() {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Window::UpdateDisplay() {
+void D_Window::UpdateDisplay() {
     glfwSwapBuffers(m_pWindow);
     glfwPollEvents();
 }
 
-void Window::PrepareRender() {
+void D_Window::PrepareRender() {
     ClearDisplay();
     UpdateWindowVariables();
     InitializeProjectionMatrix();
 }
 
-bool Window::ShouldClose() {
+bool D_Window::ShouldClose() {
     return static_cast<bool>(glfwWindowShouldClose(m_pWindow));
 }
 

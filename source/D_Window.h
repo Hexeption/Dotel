@@ -12,11 +12,11 @@
 
 #include <GLFW\glfw3.h>
 
-class Window {
+class D_Window {
 
 public:
-    Window(int width, int height, const std::string& windowTitle, bool fullscreen);
-    ~Window();
+    D_Window(int width, int height, const std::string& windowTitle, bool fullscreen);
+    ~D_Window();
 
     void Create();
     void Destroy();
