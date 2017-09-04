@@ -14,7 +14,7 @@ link_directories(Dependencies/glew/lib/Release/x64)
 
 include_directories(Dependencies/glm)
 
-set(SOURCE_FILES source/main.cpp source/Window.cpp source/Window.h)
+file(GLOB SOURCE_FILES source/*.cpp source/*.h)
 add_executable(Dotel ${SOURCE_FILES})
 
 target_link_libraries(Dotel ${OPENGL_LIBRARIES} glfw ${GLFW_LIBRARIES} glew32s opengl32)
