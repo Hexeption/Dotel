@@ -112,3 +112,8 @@ bool D_Window::ShouldClose() {
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
 }
+
+double D_Window::getDeltaTime()
+{
+	return glfwGetTime();
+}

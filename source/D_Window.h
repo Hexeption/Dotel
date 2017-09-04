@@ -28,6 +28,7 @@ public:
 	void InitializeProjectionMatrix();
 	void UpdateWindowVariables();
 	void ClearDisplay();
+	double getDeltaTime();
     bool ShouldClose();
 private:
     GLFWwindow *m_pWindow;
