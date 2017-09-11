@@ -9,8 +9,8 @@ include_directories(Dependencies/glfw/include)
 add_subdirectory(Dependencies/soil)
 include_directories(Dependencies/soil/inc)
 
-include_directories(Dependencies/glew/include)
-link_directories(Dependencies/glew/lib/Release/x64)
+add_subdirectory(Dependencies/glad)
+include_directories(Dependencies/glad/include)
 
 include_directories(Dependencies/glm)
 
