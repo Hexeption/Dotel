@@ -17,6 +17,6 @@ include_directories(Dependencies/glm)
 file(GLOB SOURCE_FILES source/*.cpp source/*.h)
 add_executable(Dotel ${SOURCE_FILES})
 
-target_link_libraries(Dotel ${OPENGL_LIBRARIES} glfw ${GLFW_LIBRARIES} glew32s opengl32)
+target_link_libraries(Dotel ${OPENGL_LIBRARIES} glfw ${GLFW_LIBRARIES} opengl32 glad)
 
 file(COPY assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
