@@ -1,6 +1,6 @@
 #include "D_ShaderLoader.h"
 
-ShaderLoader::ShaderLoader(const char *vertexPath, const char *fragmentPath)
+D_ShaderLoader::D_ShaderLoader(const char *vertexPath, const char *fragmentPath)
 {
 
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -47,22 +47,22 @@ ShaderLoader::ShaderLoader(const char *vertexPath, const char *fragmentPath)
     glDeleteShader(fragment);
 }
 
-ShaderLoader::~ShaderLoader()
+D_ShaderLoader::~D_ShaderLoader()
 {
     Disable();
 }
 
-void ShaderLoader::Use()
+void D_ShaderLoader::Use()
 {
     glUseProgram(shaderProgram);
 }
 
-void ShaderLoader::Disable()
+void D_ShaderLoader::Disable()
 {
     glUseProgram(0);
 }
 
-void ShaderLoader::checkShaderCompile(GLuint shader, std::string type)
+void D_ShaderLoader::checkShaderCompile(GLuint shader, std::string type)
 {
     int success;
     char infoLog[1024];

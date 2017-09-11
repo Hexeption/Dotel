@@ -14,13 +14,13 @@
 
 using namespace std;
 
-class ShaderLoader
+class D_ShaderLoader
 {
 public:
 //    TODO: Add geometry shader
-    ShaderLoader(const char *vertexPath, const char *fragmentPath);
+    D_ShaderLoader(const char *vertexPath, const char *fragmentPath);
 
-    ~ShaderLoader();
+    ~D_ShaderLoader();
 
 //    Enable and disable the shader
     void Use();

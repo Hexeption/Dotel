@@ -5,42 +5,27 @@
 #ifndef DOTEL_WINDOW_H
 #define DOTEL_WINDOW_H
 
-#include <string>
-
-#define GLEW_STATIC
-#include <GL/glew.h>
-
+#include <glad\glad.h>
 #include <GLFW\glfw3.h>
+#include <string>
+#include "D_Logger.h"
 
-class D_Window {
-
+class D_Window
+{
 public:
-    D_Window(int width, int height, const std::string& windowTitle, bool fullscreen);
+    D_Window(int width, int height, const std::string &title);
+
     ~D_Window();
 
-    void Create();
-    void Destroy();
-    void Update(float dt);
-    void PrepareRender();
-	void UpdateDisplay();
-	void SetupModernOpenGL();
-	void SetupForOSX();
-	void InitializeProjectionMatrix();
-	void UpdateWindowVariables();
-	void ClearDisplay();
-	double getDeltaTime();
-    bool ShouldClose();
+    void clear();
+
+    void update();
+
+    bool shouldClose();
+
+protected:
 private:
-    GLFWwindow *m_pWindow;
-
-    bool m_pFullscreen;
-
-	std::string m_windowTitle;
-    int m_windowWidth;
-    int m_windowHeight;
-    int m_oldWindowWidth;
-    int m_oldWindowHeight;
+    GLFWwindow *m_window;
 };
-
 
 #endif //DOTEL_WINDOW_H

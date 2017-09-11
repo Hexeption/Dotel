@@ -1,23 +1,36 @@
-#include <vector>
 #include "D_Window.h"
-#include "D_Triangle.h"
-#include "D_Renderer.h"
+#include "D_Mesh.h"
+#include "D_ShaderLoader.h"
+#include "D_Texture.h"
 
-int main() {
-    D_Window window(1280, 720, "Vox", false);
-	D_Renderer renderer;
+int main()
+{
+    D_Window window(800, 600, "Dotel 2.0 Example");
 
-	std::vector<D_Triangle> triangles;
+    D_Vertex vertices[]
+            {
+                    D_Vertex(glm::vec3(-0.5, -0.5, 0.0), glm::vec2(0.0, 0.0)),
+                    D_Vertex(glm::vec3(-0.5, 0.5, 0.0), glm::vec2(0.0, 1.0)),
+                    D_Vertex(glm::vec3(0.5, -0.5, 0.0), glm::vec2(1.0, 0.0)),
 
-	triangles.push_back(D_Triangle(-0.6f, -0.4f, 0.0f, 1.f, 0.f, 0.f, 1.0f));
-	triangles.push_back(D_Triangle(0.6f, -0.4f, 0.0f, 0.f, 1.f, 0.f, 1.0f));
-	triangles.push_back(D_Triangle(0.0f, 0.6f, 0.0f, 0.f, 0.f, 1.f, 1.0f));
+                    D_Vertex(glm::vec3(-0.5, 0.5, 0.0), glm::vec2(0.0, 1.0)),
+                    D_Vertex(glm::vec3(0.5, 0.5, 0.0), glm::vec2(1.0, 1.0)),
+                    D_Vertex(glm::vec3(0.5, -0.5, 0.0), glm::vec2(1.0, 0.0))
+            };
 
-    while (!window.ShouldClose()) {
-        window.PrepareRender();
-        renderer.RotatePitch(window.getDeltaTime() * 50.f);
-		renderer.Render(triangles);
-        window.UpdateDisplay();
+    D_ShaderLoader shader("../assets/shaders/core.vs.glsl", "../assets/shaders/core.frag.glsl");
+    D_Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
+    D_Texture texture("../assets/images/Tux.png");
+
+    while (!window.shouldClose())
+    {
+        window.clear();
+
+        shader.Use();
+        texture.Bind(0);
+        mesh.Draw();
+
+        window.update();
     }
 
     return 0;

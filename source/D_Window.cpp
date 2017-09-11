@@ -1,119 +1,62 @@
-//
-// Created by Keir on 16/08/2017.
-//
-
-#include <iostream>
 #include "D_Window.h"
 
-//The method called when the Window is resized
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+void error_callback(int error, const char *description);
 
-D_Window::D_Window(int width, int height, const std::string &windowTitle, bool fullscreen) {
-    m_pFullscreen = fullscreen;
+D_Window::D_Window(int width, int height, const std::string &title)
+{
+    if (!glfwInit())
+    {
+        D_Logger().Log("Failed to Initilize Windowing Library", true);
+    }
 
-    m_windowTitle = windowTitle;
-    m_windowWidth = width;
-    m_windowHeight = height;
-    m_oldWindowWidth = m_windowWidth;
-    m_oldWindowHeight = m_windowHeight;
+    glfwSetErrorCallback(error_callback);
 
-    Create();
-}
-
-D_Window::~D_Window() {
-    Destroy();
-}
-
-void D_Window::SetupModernOpenGL() {
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-}
 
-void D_Window::SetupForOSX() {
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-}
+    m_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 
-void D_Window::Create() {
-    /* Initialize the window library */
-    if (!glfwInit()) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
-        std::exit(-1);
+    if (m_window == NULL)
+    {
+        D_Logger().Log("Failed to create Window!", true);
     }
 
-    /* Create a windowed mode window and it's OpenGL context */
-    m_pWindow = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowTitle.c_str(), NULL, NULL);
-    if (!m_pWindow) {
-        std::cerr << "Failed to create Window, Possible cause: Not Enough Memory" << std::endl;
-        glfwTerminate();
-        std::exit(-1);
+    glfwMakeContextCurrent(m_window);
+
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+    {
+        D_Logger().Log("Failed to Initilize OpenGL", true);
     }
 
-    glfwMakeContextCurrent(m_pWindow);
-    glfwSwapInterval(1);
-
-    if (glewInit() != GLEW_OK) {
-        std::cerr << "Failed to initialize GLEW" << std::endl;
-        std::exit(-1);
-    }
-
-	#ifdef D_MODERN_OPENGL
-	SetupModernOpenGL();
-	#ifdef D_OSX
-	SetupForOSX();
-	#endif
-	#endif
-
-    std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
-
-    glfwSetFramebufferSizeCallback(m_pWindow, framebuffer_size_callback);
+    glViewport(0, 0, width, height);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void D_Window::Destroy() {
-    glfwDestroyWindow(m_pWindow);
+D_Window::~D_Window()
+{
+    glfwDestroyWindow(m_window);
     glfwTerminate();
 }
 
-void D_Window::Update(float dt) {
+bool D_Window::shouldClose()
+{
+    return glfwWindowShouldClose(m_window);
 }
 
-void D_Window::InitializeProjectionMatrix() {
-    float ratio = m_windowWidth / (float) m_windowHeight;
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+void D_Window::clear()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void D_Window::UpdateWindowVariables() {
-    glfwGetWindowSize(m_pWindow, &m_windowWidth, &m_windowHeight);
-}
-
-void D_Window::ClearDisplay() {
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void D_Window::UpdateDisplay() {
-    glfwSwapBuffers(m_pWindow);
+void D_Window::update()
+{
+    glfwSwapBuffers(m_window);
     glfwPollEvents();
 }
 
-void D_Window::PrepareRender() {
-    ClearDisplay();
-    UpdateWindowVariables();
-    InitializeProjectionMatrix();
-}
-
-bool D_Window::ShouldClose() {
-    return static_cast<bool>(glfwWindowShouldClose(m_pWindow));
-}
-
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-    glViewport(0, 0, width, height);
-}
-
-double D_Window::getDeltaTime()
+void error_callback(int error, const char *description)
 {
-	return glfwGetTime();
+    D_Logger().Log(description, false);
 }
