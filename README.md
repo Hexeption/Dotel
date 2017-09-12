@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
   
  	while(!window.shouldClose())
   	{
-    	window.clear();
-    	window.update();
+    		window.clear();
+    		window.update();
   	}
   	return 0;
 }
