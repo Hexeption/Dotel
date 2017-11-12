@@ -1,3 +1,3 @@
-[submodule "Core\\Lib\\glm"]
-	path = Core\\Lib\\glm
+[submodule "Core\Lib\glm"]
+	path = Core\Lib\glm
 	url = https://github.com/g-truc/glm.git
