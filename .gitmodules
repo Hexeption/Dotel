@@ -7,3 +7,6 @@
 [submodule "OpenGL/Lib/external/soil"]
 	path = OpenGL/Lib/external/soil
 	url = https://github.com/paralin/soil.git
+[submodule "DirectX/Lib/external/sdl2"]
+	path = DirectX/Lib/external/sdl2
+	url = https://github.com/davidsiaw/SDL2.git
