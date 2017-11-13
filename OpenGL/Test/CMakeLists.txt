@@ -25,3 +25,5 @@ target_link_libraries (${PROJECT_NAME} LINK_PUBLIC OpenGLLib)
 # Boost
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${Boost_LIBRARIES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${Boost_INCLUDE_DIR})
+
+file(COPY source/data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data/)

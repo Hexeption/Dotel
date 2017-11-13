@@ -10,6 +10,9 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "")
 set(GLFW_INSTALL OFF CACHE BOOL "")
 add_subdirectory(external/glfw)
 
+file(GLOB SOIL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/external/soil/src/*.c)
+set(THIRD_PARTY_SOURCES ${THIRD_PARTY_SOURCES} ${SOIL_SOURCES})
+
 file(GLOB GLAD_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/external/glad/src/*.c)
 set(THIRD_PARTY_SOURCES ${THIRD_PARTY_SOURCES} ${GLAD_SOURCES})
 
@@ -35,4 +38,8 @@ target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${GLFW_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC glfw)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/glfw/include)
 
+#GLAD
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include)
+
+#SOIL
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/soil/inc)
