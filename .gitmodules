@@ -1,6 +1,9 @@
-[submodule "Dependencies/glfw"]
-	path = Dependencies/glfw
-	url = https://github.com/glfw/glfw
-[submodule "Dependencies/soil"]
-	path = Dependencies/soil
-	url = https://github.com/paralin/soil
+[submodule "Core/Lib/external/glm"]
+	path = Core/Lib/external/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "OpenGL/Lib/external/glfw"]
+	path = OpenGL/Lib/external/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "OpenGL/Lib/external/soil"]
+	path = OpenGL/Lib/external/soil
+	url = https://github.com/paralin/soil.git

@@ -23,6 +23,9 @@ int main(int argc, char* argv[])
 
 ```
 
+### Windows
+Please use CLion with (https://nuwen.net/mingw.html) or install [Boost 1.65.1](http://www.boost.org/users/history/version_1_65_1.html) for your self
+
 ## Credits
 Dotel developed by:
 - Keir Davis (https://github.com/Hexeption)
@@ -32,7 +35,7 @@ Dotel uses the following third-party libraries:
 - GLFW 3.2.1 (https://github.com/glfw/glfw)
 - GLAD 0.1.14A0 (https://github.com/Dav1dde/glad)
 - GLM 0.9.6.3 (https://glm.g-truc.net/0.9.6/index.html)
-- SOIL (https://github.com/paralin/soil)
+- Boost 1.65.1 (http://www.boost.org/users/history/version_1_65_1.html)
 
 ## License
 
