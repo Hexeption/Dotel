@@ -4,3 +4,6 @@
 [submodule "OpenGL/Lib/external/glfw"]
 	path = OpenGL/Lib/external/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "OpenGL/Lib/external/soil"]
+	path = OpenGL/Lib/external/soil
+	url = https://github.com/paralin/soil.git
