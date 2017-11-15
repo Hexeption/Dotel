@@ -14,6 +14,8 @@ add_library(${PROJECT_NAME} ${SOURCE_FILES})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANADARD 11)
 set(CXX_STANDARD_REQUIRED ON)
 
+target_link_libraries (${PROJECT_NAME} LINK_PUBLIC OpenGLLib)
+
 #Private Includes
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/source)
 
