@@ -7,7 +7,9 @@ Dotel is a 2D and 3D game engine implemented in C++ 17 and released under the BS
 Here is a simple example program
 ```C++
 
-#include <D_Window.h>
+#include <Dotel.h>
+
+using namespace Dotel;
 
 int main(int argc, char* argv[])
 {
